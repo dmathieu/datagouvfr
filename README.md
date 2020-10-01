@@ -20,3 +20,7 @@ This will inject all the datasets configured in [config.json](config.json) into
 Elastic, with one dataset for each index.
 
 Once all the data is injected, it will be available to be used within Kibana.
+
+For example, the following is a graph showing the number of person in intensive care from march 3rd to september 30.
+
+![Number of person in intensive care](example-graph.png)
