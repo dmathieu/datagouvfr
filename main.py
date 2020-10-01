@@ -1,4 +1,3 @@
-import os
 import es
 import config
 from tqdm import tqdm
@@ -22,13 +21,9 @@ if __name__ == "__main__":
         parser = Parser(fetcher.header())
         mapping = Mapping(parser.parse(first_entry(fetcher)))
 
-        db = es.ES(dataset["index"])
-        db.create_indice(body = mapping.json())
+        db = es.ES(dataset["index"], mapping.json())
 
         with tqdm(total = fetcher.len()) as t:
             for entry in fetcher.entries():
                 db.add(parser.parse(entry))
                 t.update()
-
-        db.link_indice()
-        db.clean_indices()

@@ -2,21 +2,25 @@ from elasticsearch import Elasticsearch
 from time import time
 
 class ES:
-    def __init__(self, index):
+    def __init__(self, index, mapping):
         self.es = Elasticsearch()
         self.index = index
-        self.indice_name = f'{self.index}-{int(time())}'
-
-    def create_indice(self, body = None):
-        return self.es.indices.create(index = self.indice_name, body = body)
+        self.mapping = mapping
+        self.indices = list(self.es.indices.get(f'{self.index}-*').keys())
 
     def add(self, content):
-        return self.es.index(index = self.indice_name, body = content)
+        indice_name = self.__indice_for_content(content)
+        self.__create_indice(indice_name)
+        return self.es.index(index = indice_name, body = content)
 
-    def link_indice(self):
-        return self.es.indices.put_alias(name = self.index, index = self.indice_name)
+    def __create_indice(self, name):
+        if name not in self.indices:
+            res = self.es.indices.create(index = name, body = self.mapping)
+            self.indices.append(name)
 
-    def clean_indices(self):
-        for indice in self.es.indices.get_alias(f'{self.index}-*'):
-            if indice != self.indice_name:
-                self.es.indices.delete(indice)
+    def __indice_for_content(self, content):
+        prop = self.mapping["mappings"]["properties"]
+        for v in self.mapping["mappings"]["properties"]:
+            if prop[v]["type"] == "date":
+                return f'{self.index}-{content[v]}'
+        raise Error("No date type found in mapping")
