@@ -6,7 +6,7 @@ consumed/displayed within Kibana.
 
 ## Usage
 
-You need ElasticSearch (and later, Kibana) installed locally.
+You need [ElasticSearch and Kibana](https://www.elastic.co/guide/en/kibana/current/install.html) installed locally.
 You also need Python 3.x installed, as well a pipenv.
 
 You will also need an API key from [data.gouv.fr's API](https://doc.data.gouv.fr/).
