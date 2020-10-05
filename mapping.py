@@ -23,7 +23,7 @@ class Mapping:
 
     def __field_type(self, key, value):
         if key == "dep": # TODO: REMOVE HACK. But not all departements are integers
-            return "text"
+            return "keyword"
         elif re.search("^[0-9]+$", value):
             return "double"
         elif re.search("^[0-9]{4}-[0-9]{2}-[0-9]{2}$", value):

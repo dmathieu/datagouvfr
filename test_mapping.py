@@ -14,4 +14,4 @@ def test_integer_mapping():
 
 def test_dep_mapping():
     mapping = Mapping({"dep": "25"})
-    assert mapping.json() == {"mappings": {"dynamic": False, "properties": {"dep": {"type": "text"}}}}
+    assert mapping.json() == {"mappings": {"dynamic": False, "properties": {"dep": {"type": "keyword"}}}}
