@@ -7,6 +7,7 @@ class Mapping:
     def json(self):
         return {
             "mappings": {
+                "dynamic": False,
                 "properties": self.__properties()
             }
         }
