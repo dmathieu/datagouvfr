@@ -2,6 +2,11 @@
   {
     "index": "covid",
     "name": "donnees-hospitalieres-relatives-a-lepidemie-de-covid-19",
-    "resource_re": "^donnees-hospitalieres-covid19-"
+    "resource_re": "^donnees-hospitalieres-covid19-",
+    "properties": {
+      "dep": {
+        "type": "keyword"
+      }
+    }
   }
 ]

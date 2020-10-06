@@ -1,7 +1,8 @@
 import re
 
 class Mapping:
-    def __init__(self, entry):
+    def __init__(self, config, entry):
+        self.config = config
         self.entry = entry
 
     def json(self):
@@ -16,17 +17,21 @@ class Mapping:
         p = {}
 
         for key in self.entry.keys():
-            p[key] = {
-                "type": self.__field_type(key, self.entry[key])
-            }
+            p[key] = self.__field_property(key)
         return p
 
-    def __field_type(self, key, value):
-        if key == "dep": # TODO: REMOVE HACK. But not all departements are integers
-            return "keyword"
-        elif re.search("^[0-9]+$", value):
+    def __field_property(self, key):
+        if "properties" in self.config and key in self.config["properties"]:
+            return self.config["properties"][key]
+
+        return {
+            "type": self.__field_type(key)
+        }
+
+    def __field_type(self, key):
+        if re.search("^[0-9]+$", self.entry[key]):
             return "double"
-        elif re.search("^[0-9]{4}-[0-9]{2}-[0-9]{2}$", value):
+        elif re.search("^[0-9]{4}-[0-9]{2}-[0-9]{2}$", self.entry[key]):
             return "date"
         else:
             return "text"

@@ -19,7 +19,7 @@ if __name__ == "__main__":
                 dataset["resource_re"]
                 )
         parser = Parser(fetcher.header())
-        mapping = Mapping(parser.parse(first_entry(fetcher)))
+        mapping = Mapping(dataset, parser.parse(first_entry(fetcher)))
 
         db = es.ES(dataset["index"], mapping.json())
 
