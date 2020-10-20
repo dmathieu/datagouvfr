@@ -2,8 +2,8 @@ from elasticsearch import Elasticsearch
 from time import time
 
 class ES:
-    def __init__(self, index, mapping):
-        self.es = Elasticsearch()
+    def __init__(self, hosts, index, mapping):
+        self.es = Elasticsearch(hosts = hosts)
         self.index = index
         self.mapping = mapping
 

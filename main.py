@@ -10,7 +10,9 @@ def first_entry(fetcher):
     return next(fetcher.entries())
 
 if __name__ == "__main__":
-    for dataset in config.load():
+    c = config.load()
+
+    for dataset in c.datasets():
         print(f'Indexing Dataset {dataset["name"]}')
 
         fetcher = Fetcher(
@@ -21,7 +23,7 @@ if __name__ == "__main__":
         parser = Parser(fetcher.header())
         mapping = Mapping(dataset, parser.parse(first_entry(fetcher)))
 
-        db = es.ES(dataset["index"], mapping.json())
+        db = es.ES(c.elasticsearch(), dataset["index"], mapping.json())
 
         with tqdm(total = fetcher.len()) as t:
             for entry in fetcher.entries():
