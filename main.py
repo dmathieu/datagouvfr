@@ -29,3 +29,4 @@ if __name__ == "__main__":
             for entry in fetcher.entries():
                 db.add(parser.parse(entry))
                 t.update()
+        db.commit()
