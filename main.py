@@ -15,11 +15,7 @@ if __name__ == "__main__":
     for dataset in c.datasets():
         print(f'Indexing Dataset {dataset["name"]}')
 
-        fetcher = Fetcher(
-                config.api_key(),
-                dataset["name"],
-                dataset["resource_re"]
-                )
+        fetcher = Fetcher(config.api_key(), dataset)
         parser = Parser(fetcher.header())
         mapping = Mapping(dataset, parser.parse(first_entry(fetcher)))
 

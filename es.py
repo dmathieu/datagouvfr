@@ -20,7 +20,8 @@ class ES:
         self.to_index.append(content)
 
     def commit(self):
-        return helpers.bulk(self.es, self.__data_to_index())
+        helpers.bulk(self.es, self.__data_to_index())
+        self.to_index = []
 
     def __setup_template(self):
         self.es.indices.put_index_template(name = self.index, body = {

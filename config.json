@@ -2,11 +2,15 @@
   "datasets": [
     {
       "index": "covid",
-      "name": "donnees-hospitalieres-relatives-a-lepidemie-de-covid-19",
-      "resource_re": "^donnees-hospitalieres-covid19-",
+      "name": "synthese-des-indicateurs-de-suivi-de-lepidemie-covid-19",
+      "resource_re": "table-indicateurs-open-data-dep-",
+      "delimiter": ",",
       "properties": {
         "dep": {
           "type": "keyword"
+        },
+        "pos": {
+          "type": "integer"
         }
       }
     }

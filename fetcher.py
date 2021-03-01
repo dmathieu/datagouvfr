@@ -3,17 +3,16 @@ import csv
 import re
 
 class Fetcher:
-    def __init__(self, api_key, dataset, resource_re):
+    def __init__(self, api_key, dataset):
         self.api_key = api_key
         self.dataset = dataset
-        self.resource_re = resource_re
         self.data = None
         self.lines = None
         self.load()
 
     def load(self):
         self.data = requests.get(
-                f'https://www.data.gouv.fr/api/1/datasets/{self.dataset}/',
+                f'https://www.data.gouv.fr/api/1/datasets/{self.dataset["name"]}/',
                 headers = {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -24,11 +23,11 @@ class Fetcher:
         return len(self.__lines())
 
     def header(self):
-        reader = csv.reader(self.__lines(), delimiter=';')
+        reader = csv.reader(self.__lines(), delimiter=self.dataset["delimiter"])
         return next(reader)
 
     def entries(self):
-        reader = csv.reader(self.__lines(), delimiter=';')
+        reader = csv.reader(self.__lines(), delimiter=self.dataset["delimiter"])
         next(reader)
 
         for entry in reader:
@@ -41,6 +40,6 @@ class Fetcher:
 
     def __resource(self):
         for resource in self.data.json()['resources']:
-            if re.search(self.resource_re, resource['title']):
+            if re.search(self.dataset["resource_re"], resource['title']):
                 return resource
         return None
